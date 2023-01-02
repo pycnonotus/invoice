@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "3NJH47UIsNECPpNH+YRxCb2C9ZF3HYqCm7PtM6t8CNCBYOPrkNBvpjt1XgLRbH/rUMEvEOPzCPAEN8ZxTn4SWw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\me\\source\\repos\\PlayHell\\invoice\\src\\Application\\Application.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\me\\.nuget\\packages\\domain\\1.0.0\\domain.1.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
