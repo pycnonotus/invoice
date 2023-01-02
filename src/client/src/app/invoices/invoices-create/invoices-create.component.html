@@ -1,1 +1,17 @@
-<p>invoices-create works!</p>
+<form [formGroup]="invoiceForm" (ngSubmit)="submit()">
+  <mat-form-field>
+    <mat-label>Customer</mat-label>
+    <mat-select formControlName="customerId">
+      <mat-option *ngFor="let customer of customers$|async" [value]="customer.id">
+        {{customer.firstName}} {{customer.lastName}}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="invoiceForm.get('customerId')!.hasError('required')">
+      Customer is required
+    </mat-error>
+  </mat-form-field>
+
+  <div class="row">
+    <button mat-raised-button color="primary" [disabled]="invoiceForm.invalid" type="submit">Submit</button>
+  </div>
+</form>

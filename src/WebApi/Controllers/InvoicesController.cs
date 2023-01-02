@@ -6,11 +6,11 @@ namespace WebApi.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class InvoiceController : ControllerBase
+public class InvoicesController : ControllerBase
 {
 	private readonly IInvoiceService _invoiceService;
 
-	public InvoiceController(IInvoiceService invoiceDtoService)
+	public InvoicesController(IInvoiceService invoiceDtoService)
 	{
 		_invoiceService = invoiceDtoService ?? throw new ArgumentNullException(nameof(invoiceDtoService));
 	}
@@ -35,12 +35,18 @@ public class InvoiceController : ControllerBase
 	}
 
 	[HttpPost]
-	public async Task<ActionResult<Guid>> Add([FromBody]NewInvoiceDto newInvoiceDto)
+	public async Task<ActionResult<InvoiceDto>> Add([FromBody]NewInvoiceDto newInvoiceDto)
 	{
-		var id = await _invoiceService.Add(newInvoiceDto);
-		return CreatedAtAction(nameof(GetById), new { id }, id);
+		var invoiceDto = await _invoiceService.Add(newInvoiceDto);
+		return CreatedAtAction(nameof(GetById), new { id = invoiceDto }, invoiceDto);
 	}
+	[HttpPut("{id:guid}")]
+	public async Task<IActionResult> UpdateInvoice(Guid id, [FromBody] InvoiceUpdateDto updateDto)
+	{
+		await _invoiceService.Update(id,updateDto);
 
+		return NoContent();
+	}
 	[HttpDelete("{id:guid}")]
 	public async Task<ActionResult> Remove(Guid id)
 	{
@@ -48,17 +54,17 @@ public class InvoiceController : ControllerBase
 		return NoContent();
 	}
 
-	[HttpPost("{invoiceId:guid}/products")]
-	public async Task<ActionResult> AddProduct(Guid invoiceId, AddProductDto addProductDto)
-	{
-		await _invoiceService.AddProduct(invoiceId, addProductDto);
-		return NoContent();
-	}
-
-	[HttpDelete("{invoiceId:guid}/products/{productName}")]
-	public async Task<ActionResult> RemoveProduct(Guid invoiceId, string productName)
-	{
-		await _invoiceService.RemoveProduct(invoiceId, productName);
-		return NoContent();
-	}
+	// [HttpPost("{invoiceId:guid}/products")]
+	// public async Task<ActionResult> AddProduct(Guid invoiceId, AddProductDto addProductDto)
+	// {
+	// 	await _invoiceService.AddProduct(invoiceId, addProductDto);
+	// 	return NoContent();
+	// }
+	//
+	// [HttpDelete("{invoiceId:guid}/products/{productName}")]
+	// public async Task<ActionResult> RemoveProduct(Guid invoiceId, string productName)
+	// {
+	// 	await _invoiceService.RemoveProduct(invoiceId, productName);
+	// 	return NoContent();
+	// }
 }

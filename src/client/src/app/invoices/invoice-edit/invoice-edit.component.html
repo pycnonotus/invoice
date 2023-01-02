@@ -1,1 +1,33 @@
-<p>invoice-edit works!</p>
+<form [formGroup]="invoiceForm" (ngSubmit)="submit()">
+  <div class="row">
+
+    <mat-form-field>
+      <mat-label>Customer</mat-label>
+      <mat-select formControlName="customerId">
+        <mat-option *ngFor="let customer of customers$ | async" [value]="customer.id">
+          {{customer.firstName}} {{customer.lastName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+<div class="row">
+
+  <mat-form-field>
+    <mat-label>Amount</mat-label>
+    <input matInput formControlName="amount" type="number">
+  </mat-form-field>
+</div>
+<div class="row">
+
+  <mat-form-field>
+    <mat-label>Status</mat-label>
+    <mat-select formControlName="status">
+      <mat-option [value]="1">{{1|statusName}}</mat-option>
+      <mat-option [value]="0">{{0|statusName}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+  <div class="row">
+    <button mat-raised-button color="primary" [disabled]="invoiceForm.invalid" type="submit">Submit</button>
+  </div>
+</form>

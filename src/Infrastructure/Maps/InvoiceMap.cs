@@ -1,6 +1,13 @@
-﻿namespace Infrastructure.Maps;
+﻿using Application.Dtos.Invoices;
+using AutoMapper;
+using Domain.Entities;
 
-public class InvoiceMap
+namespace Infrastructure.Maps;
+
+public class InvoiceMap : Profile
 {
-	
+	public InvoiceMap()
+	{
+		CreateMap<Invoice, InvoiceDto>();
+	}
 }

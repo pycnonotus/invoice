@@ -2,6 +2,8 @@
 
 public class Product
 {
+	public Guid ID { get; set; }
+	
 	private int _amount;
 	private decimal _pricePerItem;
 

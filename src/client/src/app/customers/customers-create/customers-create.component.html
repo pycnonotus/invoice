@@ -1,7 +1,30 @@
-<div class="row">
-
-</div>
-
-<div class="row">
-  
-</div>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <input matInput placeholder="First Name" formControlName="firstName" autofocus  >
+    <mat-hint>Must be at least 1 character</mat-hint>
+    <mat-error *ngIf="form.get('firstName')!.hasError('required')">
+      First name is required
+    </mat-error>
+    <mat-error *ngIf="form.get('firstName')!.hasError('maxlength')">
+      First name must be no more than 50 characters
+    </mat-error>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input matInput placeholder="Last Name" formControlName="lastName">
+    <mat-hint>Must be at least 1 character</mat-hint>
+    <mat-error *ngIf="form.get('lastName')!.hasError('required')">
+      Last name is required
+    </mat-error>
+    <mat-error *ngIf="form.get('lastName')!.hasError('minlength')">
+      Last name must be at least 1 character
+    </mat-error>
+    <mat-error *ngIf="form.get('lastName')!.hasError('maxlength')">
+      Last name must be no more than 50 characters
+    </mat-error>
+  </mat-form-field>
+  <br>
+  <div class="center">
+    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Submit</button>
+  </div>
+</form>

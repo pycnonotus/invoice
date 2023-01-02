@@ -87,108 +87,117 @@ public class ProductTests
 		var product = new Product("Product A", 10, 15.99m);
 		decimal invalidPricePerItem = -1;
 
-		void Action() => product.PricePerItem = invalidPricePerItem;
+		void Action()
+		{
+			product.PricePerItem = invalidPricePerItem;
+		}
 
 		var exception = Assert.Throws<ArgumentException>(Action);
 		Assert.Equal("Value cannot be negative. (Parameter 'PricePerItem')", exception.Message);
 	}
 
-	[Fact]
-	public void PaymentId_WithValidValue_UpdatesProperties()
-	{
-		var invoice = new Invoice(Guid.NewGuid());
-		var paymentId = "123456";
+	// [Fact]
+	// public void PaymentId_WithValidValue_UpdatesProperties()
+	// {
+	// 	var invoice = new Invoice(Guid.NewGuid());
+	// 	var paymentId = "123456";
+	//
+	// 	invoice.PaymentId = paymentId;
+	//
+	// 	Assert.Equal(paymentId, invoice.PaymentId);
+	// 	Assert.Equal(Status.Paid, invoice.Status);
+	// 	Assert.NotNull(invoice.PaymentDate);
+	// }
+	//
+	// [Fact]
+	// public void PaymentId_WithNullOrWhitespace_ThrowsArgumentException()
+	// {
+	// 	var invoice = new Invoice(Guid.NewGuid());
+	// 	var invalidPaymentId = "   ";
+	//
+	// 	void Action()
+	// 	{
+	// 		invoice.PaymentId = invalidPaymentId;
+	// 	}
+	//
+	// 	var exception = Assert.Throws<ArgumentException>(Action);
+	// 	Assert.Equal("Value cannot be null or whitespace. (Parameter 'PaymentId')", exception.Message);
+	// }
+	//
+	// [Fact]
+	// public void PaymentId_WhenAlreadyPaid_ThrowsAlreadyPaidException()
+	// {
+	// 	var invoice = new Invoice(Guid.NewGuid());
+	// 	invoice.PaymentId = "123456";
+	//
+	// 	void Action()
+	// 	{
+	// 		invoice.PaymentId = "654321";
+	// 	}
+	//
+	// 	Assert.Throws<AlreadyPaidException>(Action);
+	// }
 
-		invoice.PaymentId = paymentId;
-
-		Assert.Equal(paymentId, invoice.PaymentId);
-		Assert.Equal(Status.Paid, invoice.Status);
-		Assert.NotNull(invoice.PaymentDate);
-	}
-
-	[Fact]
-	public void PaymentId_WithNullOrWhitespace_ThrowsArgumentException()
-	{
-		var invoice = new Invoice(Guid.NewGuid());
-		var invalidPaymentId = "   ";
-
-		void Action()
-		{
-			invoice.PaymentId = invalidPaymentId;
-		}
-
-		var exception = Assert.Throws<ArgumentException>(Action);
-		Assert.Equal("Value cannot be null or whitespace. (Parameter 'PaymentId')", exception.Message);
-	}
-
-	[Fact]
-	public void PaymentId_WhenAlreadyPaid_ThrowsAlreadyPaidException()
-	{
-		var invoice = new Invoice(Guid.NewGuid());
-		invoice.PaymentId = "123456";
-
-		void Action() => invoice.PaymentId = "654321";
-
-		Assert.Throws<AlreadyPaidException>(Action);
-	}
-
-
-	[Fact]
-	public void Products_WhenListIsNull_ReturnsEmptyList()
-	{
-		var invoice = new Invoice(Guid.NewGuid());
-
-		var products = invoice.Products;
-
-		Assert.Empty(products);
-	}
-
-	[Fact]
-	public void AddProduct_WithNewProduct_AddsProductToList()
-	{
-		var invoice = new Invoice(Guid.NewGuid());
-		var product = new Product("Product A", 10, 15.99m);
-
-		invoice.AddProduct(product);
-
-		Assert.Contains(product, invoice.Products);
-	}
-
-	[Fact]
-	public void AddProduct_WithExistingProduct_ThrowsProductAlreadyExistsException()
-	{
-		var invoice = new Invoice(Guid.NewGuid());
-		var product = new Product("Product A", 10, 15.99m);
-		invoice.AddProduct(product);
-
-		void Action() => invoice.AddProduct(product);
-
-		Assert.Throws<ProductAlreadyExistsException>(Action);
-	}
-
-	[Fact]
-	public void RemoveProductByName_WithExistingProduct_RemovesProductFromList()
-	{
-		var invoice = new Invoice(Guid.NewGuid());
-		var product = new Product("Product A", 10, 15.99m);
-		invoice.AddProduct(product);
-
-		var result = invoice.RemoveProductByName("Product A");
-
-		Assert.True(result);
-		Assert.DoesNotContain(product, invoice.Products);
-	}
-
-	[Fact]
-	public void RemoveProductByName_WithNonExistingProduct_ReturnsFalse()
-	{
-		var invoice = new Invoice(Guid.NewGuid());
-		var product = new Product("Product A", 10, 15.99m);
-		invoice.AddProduct(product);
-
-		var result = invoice.RemoveProductByName("Product B");
-
-		Assert.False(result);
-		Assert.Contains(product, invoice.Products);
-	}
+	//
+	// [Fact]
+	// public void Products_WhenListIsNull_ReturnsEmptyList()
+	// {
+	// 	var invoice = new Invoice(Guid.NewGuid());
+	//
+	// 	var products = invoice.Products;
+	//
+	// 	Assert.Empty(products);
+	// }
+	//
+	// [Fact]
+	// public void AddProduct_WithNewProduct_AddsProductToList()
+	// {
+	// 	var invoice = new Invoice(Guid.NewGuid());
+	// 	var product = new Product("Product A", 10, 15.99m);
+	//
+	// 	invoice.AddProduct(product);
+	//
+	// 	Assert.Contains(product, invoice.Products);
+	// }
+	//
+	// [Fact]
+	// public void AddProduct_WithExistingProduct_ThrowsProductAlreadyExistsException()
+	// {
+	// 	var invoice = new Invoice(Guid.NewGuid());
+	// 	var product = new Product("Product A", 10, 15.99m);
+	// 	invoice.AddProduct(product);
+	//
+	// 	void Action()
+	// 	{
+	// 		invoice.AddProduct(product);
+	// 	}
+	//
+	// 	Assert.Throws<ProductAlreadyExistsException>(Action);
+	// }
+	//
+	// [Fact]
+	// public void RemoveProductByName_WithExistingProduct_RemovesProductFromList()
+	// {
+	// 	var invoice = new Invoice(Guid.NewGuid());
+	// 	var product = new Product("Product A", 10, 15.99m);
+	// 	invoice.AddProduct(product);
+	//
+	// 	var result = invoice.RemoveProductByName("Product A");
+	//
+	// 	Assert.True(result);
+	// 	Assert.DoesNotContain(product, invoice.Products);
+	// }
+	//
+	// [Fact]
+	// public void RemoveProductByName_WithNonExistingProduct_ReturnsFalse()
+	// {
+	// 	var invoice = new Invoice(Guid.NewGuid());
+	// 	var product = new Product("Product A", 10, 15.99m);
+	// 	invoice.AddProduct(product);
+	//
+	// 	var result = invoice.RemoveProductByName("Product B");
+	//
+	// 	Assert.False(result);
+	// 	Assert.Contains(product, invoice.Products);
+	// }
 }

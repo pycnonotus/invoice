@@ -1,0 +1,35 @@
+<mat-table *ngIf="invoices$ |async as invoices" [dataSource]="invoices" class="mat-elevation-z8">
+  <!-- Customer Column -->
+  <ng-container matColumnDef="customer">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Customer </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.customer.firstName }} {{ element.customer.lastName }} </mat-cell>
+  </ng-container>
+  <!-- Date Column -->
+  <ng-container matColumnDef="creation">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Date </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.creation | date : "d/M/yy hh:mm" }} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="amount">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> amount </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.amount | currency }} </mat-cell>
+  </ng-container>
+  <!-- Status Column -->
+  <ng-container matColumnDef="status">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{ element.status | statusName}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="edit">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>  </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+          <div class="rigth">
+            <button mat-raised-button color="primary" (click)="edit(element)">edit</button>
+            <button mat-raised-button color="primary" (click)="delete(element.id)" >delete</button>
+          </div>
+
+    </mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+

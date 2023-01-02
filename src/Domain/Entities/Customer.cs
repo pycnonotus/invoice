@@ -2,6 +2,11 @@
 
 public class Customer
 {
+
+	public Customer()
+	{
+		
+	}
 	public Customer(string firstName, string lastName)
 	{
 		if (string.IsNullOrWhiteSpace(firstName)) throw new ArgumentException("Value cannot be null or whitespace.", nameof(firstName));
@@ -12,6 +17,6 @@ public class Customer
 	}
 
 	public Guid Id { get; private init; }
-	public string FirstName { get; }
-	public string LastName { get; }
+	public string FirstName { get; private set; } //TODO Remove private sets
+	public string LastName { get; private set;} //TODO Remove private sets
 }

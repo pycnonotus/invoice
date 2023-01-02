@@ -3,12 +3,12 @@
 public struct DateRange //TODO add unit tests
 {
 
-	
+
 	public DateRange()
 	{
 	}
-	
-	public DateRange(DateTime from,DateTime too)
+
+	public DateRange(DateTime from, DateTime too)
 	{
 		From = from;
 		Too = too;

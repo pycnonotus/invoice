@@ -1,6 +1,14 @@
-﻿namespace Infrastructure.Maps;
+﻿using Application.Dtos.Customers;
+using AutoMapper;
+using Domain.Entities;
 
-public class CustomerMap
+namespace Infrastructure.Maps;
+
+public class CustomerMap : Profile
 {
-	
+	public CustomerMap()
+	{
+		CreateMap<NewCustomerDto, Customer>();
+		CreateMap<Customer,CustomerDto>();
+	}
 }

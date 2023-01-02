@@ -13,3 +13,7 @@ C:\Users\me\source\repos\PlayHell\invoice\src\Infrastructure\obj\Debug\net7.0\In
 C:\Users\me\source\repos\PlayHell\invoice\src\Infrastructure\obj\Debug\net7.0\refint\Infrastructure.dll
 C:\Users\me\source\repos\PlayHell\invoice\src\Infrastructure\obj\Debug\net7.0\Infrastructure.pdb
 C:\Users\me\source\repos\PlayHell\invoice\src\Infrastructure\obj\Debug\net7.0\ref\Infrastructure.dll
+C:\Users\me\source\repos\PlayHell\invoice\src\Infrastructure\bin\Debug\net7.0\Application.dll
+C:\Users\me\source\repos\PlayHell\invoice\src\Infrastructure\bin\Debug\net7.0\Application.pdb
+C:\Users\me\source\repos\PlayHell\invoice\src\Infrastructure\bin\Debug\net7.0\Infrastructure.runtimeconfig.json
+C:\Users\me\source\repos\PlayHell\invoice\src\Infrastructure\obj\Debug\net7.0\Infrastructure.genruntimeconfig.cache

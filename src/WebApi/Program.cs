@@ -1,25 +1,39 @@
-var builder = WebApplication.CreateBuilder(args);
+using Serilog;
+using WebApi.Startups;
 
-// Add services to the container.
+InitializeLogger();
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+try
 {
-	app.UseSwagger();
-	app.UseSwaggerUI();
+	Log.Information("Building web application with args {Args}", args);
+	var webapp = BuildWebApplication(args);
+
+	Log.Information("Starting web application");
+	webapp.Run();
+}
+catch(Exception ex)
+{
+	Log.Fatal(ex, "Application terminated unexpectedly");
+}
+finally
+{
+	Log.CloseAndFlush();
 }
 
-app.UseHttpsRedirection();
+WebApplication BuildWebApplication(string[] args)
+{
+	return WebApplication
+		.CreateBuilder(args)
+		.RegisterServices()
+		.Build()
+		.RegisterDefualtMiddleWares();
+}
 
-app.UseAuthorization();
+static void InitializeLogger()
+{
+	Log.Logger = new LoggerConfiguration()
+		.WriteTo
+		.Console()
+		.CreateLogger();
 
-app.MapControllers();
-
-app.Run();
+}

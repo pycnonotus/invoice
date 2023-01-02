@@ -1,4 +1,6 @@
-﻿namespace Application.Dtos.Common;
+﻿using Application.Dtos.Common;
+
+namespace Application.Interfaces;
 
 public interface IPaged
 {

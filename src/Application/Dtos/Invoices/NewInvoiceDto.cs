@@ -1,4 +1,4 @@
-﻿namespace Application.Dtos;
+﻿namespace Application.Dtos.Invoices;
 
 public class NewInvoiceDto
 {

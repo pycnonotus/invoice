@@ -1,34 +1,48 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject, tap } from 'rxjs';
 import { NewCustomerDto } from '../models/new-customer-dto';
-import { CustomerDto } from '../models/customer-dto';
+import { Customer } from '../models/customer';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
-  private baseUrl = '/api/customers';
-  private customersSubject: ReplaySubject<CustomerDto[]> = new ReplaySubject<CustomerDto[]>(1);
+  private baseUrl = 'customers';
+  private customerDtos:Customer[] = [];
+  private customersSubject: ReplaySubject<Customer[]> = new ReplaySubject<Customer[]>(1);
 
-  public customersSubject$: Observable<CustomerDto[]> = this.customersSubject.asObservable();
+  public customers$: Observable<Customer[]> = this.customersSubject.asObservable();
 
 
-  constructor(private http: HttpClient) { }
 
-  getCustomers(): Observable<CustomerDto[]> {
-    return this.http.get<CustomerDto[]>(this.baseUrl);
+  constructor(private http: HttpClient) {
+    this.getCustomers().subscribe((res:Customer[])=>{
+      this.customersSubject.next(res);
+      this.customerDtos = [...res];
+    });
   }
 
-  getCustomer(id: string): Observable<CustomerDto> {
-    return this.http.get<CustomerDto>(`${this.baseUrl}/${id}`);
+  private getCustomers(): Observable<Customer[]> {
+    return this.http.get<Customer[]>(this.baseUrl);
   }
 
-  createCustomer(newCustomer: NewCustomerDto): Observable<CustomerDto> {
-    return this.http.post<CustomerDto>(this.baseUrl, newCustomer);
+  getCustomer(id: string): Observable<Customer> {
+    return this.http.get<Customer>(`${this.baseUrl}/${id}`);
   }
 
-  deleteCustomer(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  createCustomer(newCustomer: NewCustomerDto): Observable<Customer> {
+    return this.http.post<Customer>(this.baseUrl, newCustomer).pipe(tap(res=>{
+      this.customerDtos = [res,...this.customerDtos];
+      this.customersSubject.next(this.customerDtos);
+
+    }));
+  }
+
+  delete(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`).pipe(tap(_=>{
+      this.customerDtos = this.customerDtos.filter(x=> x.id !== id);
+      this.customersSubject.next(this.customerDtos);
+    }));
   }
 }

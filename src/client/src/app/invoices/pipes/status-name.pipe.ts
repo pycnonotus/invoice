@@ -8,12 +8,10 @@ export class StatusNamePipe implements PipeTransform {
 
   transform(value: Status) : string {
     switch (value) {
-      case value:
-
-        break;
-
-      default:
-        break;
+      case Status.Paid:
+        return "Paid"
+      case Status.Unpaid:
+        return "Unpaid";
     }
   }
 
